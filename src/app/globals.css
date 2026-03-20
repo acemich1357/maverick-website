@@ -1,1 +1,190 @@
 @import "tailwindcss";
+
+:root {
+  --color-bg: #0a0a0a;
+  --color-surface: #141414;
+  --color-surface-elevated: #1a1a1a;
+  --color-accent: #ff3d00;
+  --color-accent-hover: #ff6d3d;
+  --color-accent-glow: rgba(255, 61, 0, 0.3);
+  --color-text: #f5f5f5;
+  --color-text-muted: #a0a0a0;
+  --color-border: #2a2a2a;
+  --color-gradient-start: #ff3d00;
+  --color-gradient-end: #ff8c00;
+}
+
+* {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-space-grotesk), system-ui, sans-serif;
+}
+
+.font-mono {
+  font-family: var(--font-jetbrains-mono), monospace;
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, var(--color-gradient-start), var(--color-gradient-end));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--color-accent), var(--color-gradient-end));
+  color: white;
+  font-weight: 600;
+  padding: 0.875rem 2rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px var(--color-accent-glow);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px var(--color-accent-glow);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--color-text);
+  font-weight: 600;
+  padding: 0.875rem 2rem;
+  border-radius: 0.5rem;
+  border: 2px solid var(--color-border);
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 1rem;
+  padding: 2rem;
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  border-color: var(--color-accent);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 40px rgba(255, 61, 0, 0.1);
+}
+
+.section {
+  padding: 6rem 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-title {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  line-height: 1.1;
+}
+
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 2rem;
+  }
+}
+
+.timeline-line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, var(--color-accent), var(--color-gradient-end));
+  transform: translateX(-50%);
+}
+
+@media (max-width: 768px) {
+  .timeline-line {
+    left: 1rem;
+  }
+}
+
+.glow-effect {
+  position: relative;
+}
+
+.glow-effect::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(135deg, var(--color-accent), var(--color-gradient-end));
+  border-radius: inherit;
+  filter: blur(20px);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.glow-effect:hover::before {
+  opacity: 0.5;
+}
+
+input, textarea {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  width: 100%;
+  transition: border-color 0.3s ease;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+
+input::placeholder, textarea::placeholder {
+  color: var(--color-text-muted);
+}
+
+.gradient-border {
+  position: relative;
+  background: var(--color-surface);
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 2px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, var(--color-accent), var(--color-gradient-end));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px var(--color-accent-glow); }
+  50% { box-shadow: 0 0 40px var(--color-accent-glow); }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
