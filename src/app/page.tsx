@@ -1,11 +1,32 @@
 import Link from "next/link";
-import { db } from "@/db";
-
-export const dynamic = 'force-dynamic';
 import { siteSettings, photos, projects, blogPosts, timelineEvents } from "@/db/schema";
+
+const defaultSettings = {
+  hero_subtitle: "Visionary Entrepreneur • Web3 Innovator • Builder",
+  hero_headline: "Not Your Ordinary Entrepreneur.\nDreamer. Revolutionary. Builder.",
+  hero_intro: "Empowering the next generation of leaders and innovators through Web3. I am Ace Mich—someone who has walked the toughest paths, learned from the school of life, and emerged stronger, wiser, and ready to build the future.",
+  about_title: "The Journey That Made Me Who I Am",
+  journey_title: "From Trials to Triumph",
+  journey_subtitle: "Life is not a straight line. Mine has been filled with highs, lows, lessons, and breakthroughs. Here's a look at the moments that defined me:",
+  projects_title: "Building the Future, One Innovation at a Time",
+  projects_subtitle: "Web3 isn't just technology—it's an opportunity to create leaders, entrepreneurs, and second chances.",
+  blog_title: "Thoughts, Lessons, and Innovations",
+  blog_subtitle: "A space for insights on entrepreneurship, Web3, technology, and personal growth.",
+  contact_title: "Let's Build Something Extraordinary",
+  contact_subtitle: "Whether you want to collaborate, invest, or learn from my journey, I'm ready to connect.",
+  cta_title: "The Sky Is Never the Limit",
+  cta_subtitle: "I believe in pushing boundaries, creating opportunities, and empowering the next generation. Join me and reach for the galaxy.",
+  email: "acemichel0@gmail.com",
+  phone: "+254700757159",
+  twitter: "",
+  discord: "",
+  linkedin: "",
+  github: "",
+};
 
 async function getSiteData() {
   try {
+    const { db } = await import("@/db");
     const [settings, allPhotos, allProjects, allPosts, allEvents] = await Promise.all([
       db.select().from(siteSettings),
       db.select().from(photos).orderBy(photos.slot),
@@ -14,7 +35,7 @@ async function getSiteData() {
       db.select().from(timelineEvents).orderBy(timelineEvents.order),
     ]);
 
-    const settingsMap: Record<string, string> = {};
+    const settingsMap: Record<string, string> = { ...defaultSettings };
     settings.forEach((s) => {
       settingsMap[s.key] = s.value;
     });
@@ -22,7 +43,7 @@ async function getSiteData() {
     return {
       settings: settingsMap,
       photos: allPhotos,
-      projects: allProjects.map(p => ({
+      projects: allProjects.map((p: any) => ({
         ...p,
         tags: p.tags ? JSON.parse(p.tags) : [],
       })),
@@ -31,7 +52,7 @@ async function getSiteData() {
     };
   } catch {
     return {
-      settings: {},
+      settings: defaultSettings,
       photos: [],
       projects: [],
       posts: [],
@@ -85,9 +106,7 @@ function NavLink({ href, children }: { href: string; children: React.ReactNode }
   );
 }
 
-function HeroSection({ settings, photos }: { settings: Record<string, string>; photos: { slot: number; url: string; alt: string | null }[] }) {
-  const hasPhoto = photos.some(p => p.slot === 1 && p.url);
-  
+function HeroSection({ settings, photos }: { settings: Record<string, string>; photos: any[] }) {
   return (
     <section className="min-h-screen flex items-center justify-center pt-20 relative overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(255,61,0,0.15),_transparent_50%)]" />
@@ -96,10 +115,10 @@ function HeroSection({ settings, photos }: { settings: Record<string, string>; p
       
       <div className="section text-center relative z-10">
         <p className="font-mono text-[#ff3d00] mb-6 tracking-widest uppercase text-sm">
-          {settings.hero_subtitle || "Visionary Entrepreneur • Web3 Innovator • Builder"}
+          {settings.hero_subtitle}
         </p>
         <h1 className="section-title mb-6">
-          {(settings.hero_headline || "Not Your Ordinary Entrepreneur.\nDreamer. Revolutionary. Builder.").split("\n").map((line, i) => (
+          {(settings.hero_headline || "").split("\n").map((line, i) => (
             <span key={i}>
               {i === 1 ? <span className="text-gradient">{line}</span> : line}
               {i === 0 && <br />}
@@ -107,7 +126,7 @@ function HeroSection({ settings, photos }: { settings: Record<string, string>; p
           ))}
         </h1>
         <p className="text-xl text-[#a0a0a0] max-w-2xl mx-auto mb-12 leading-relaxed">
-          {settings.hero_intro || "Empowering the next generation of leaders and innovators through Web3. I am Ace Mich—someone who has walked the toughest paths, learned from the school of life, and emerged stronger, wiser, and ready to build the future."}
+          {settings.hero_intro}
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <a href="#about" className="btn-primary text-center">Discover My Journey</a>
@@ -137,7 +156,7 @@ function AboutSection({ settings }: { settings: Record<string, string> }) {
   return (
     <section id="about" className="section bg-[#0a0a0a]">
       <div className="text-center mb-16">
-        <h2 className="section-title">{settings.about_title || "The Journey That Made Me Who I Am"}</h2>
+        <h2 className="section-title">{settings.about_title}</h2>
       </div>
       
       <div className="grid md:grid-cols-3 gap-8">
@@ -176,36 +195,7 @@ function AboutCard({ icon, title, description }: { icon: string; title: string; 
   );
 }
 
-function JourneySection({ settings, events }: { settings: Record<string, string>; events: { id: number; year: string; title: string; description: string; icon: string | null; order: number }[] }) {
-  return (
-    <section id="journey" className="section bg-[#0a0a0a]">
-      <div className="text-center mb-16">
-        <h2 className="section-title">{settings.journey_title || "From Trials to Triumph"}</h2>
-        <p className="text-[#a0a0a0] max-w-2xl mx-auto mt-4">
-          {settings.journey_subtitle || "Life is not a straight line. Mine has been filled with highs, lows, lessons, and breakthroughs. Here's a look at the moments that defined me:"}
-        </p>
-      </div>
-      
-      <div className="relative">
-        <div className="timeline-line hidden md:block" />
-        
-        <div className="space-y-12">
-          {events.length > 0 ? events.map((event, index) => (
-            <TimelineItem key={event.id} event={event} index={index} />
-          )) : (
-            <DefaultTimeline />
-          )}
-        </div>
-      </div>
-      
-      <div className="text-center mt-16">
-        <a href="#projects" className="btn-primary">Learn More About My Vision</a>
-      </div>
-    </section>
-  );
-}
-
-function DefaultTimeline() {
+function JourneySection({ settings, events }: { settings: Record<string, string>; events: any[] }) {
   const defaultEvents = [
     { year: "Rock Bottom", title: "Homelessness → Finding resilience in adversity", description: "The darkest chapter became the foundation of my strength.", icon: "🏕️" },
     { year: "The Crossing", title: "Crossing borders → Learning the world firsthand", description: "No papers, no problem. I learned that courage beats circumstance.", icon: "🌍" },
@@ -215,9 +205,32 @@ function DefaultTimeline() {
     { year: "Now", title: "Web3 ecosystem launch → Empowering future leaders", description: "Building the future I always envisioned.", icon: "⛓️" },
   ];
 
-  return defaultEvents.map((event, index) => (
-    <TimelineItem key={index} event={event} index={index} />
-  ));
+  const displayEvents = events.length > 0 ? events : defaultEvents;
+
+  return (
+    <section id="journey" className="section bg-[#0a0a0a]">
+      <div className="text-center mb-16">
+        <h2 className="section-title">{settings.journey_title}</h2>
+        <p className="text-[#a0a0a0] max-w-2xl mx-auto mt-4">
+          {settings.journey_subtitle}
+        </p>
+      </div>
+      
+      <div className="relative">
+        <div className="timeline-line hidden md:block" />
+        
+        <div className="space-y-12">
+          {displayEvents.map((event: any, index: number) => (
+            <TimelineItem key={index} event={event} index={index} />
+          ))}
+        </div>
+      </div>
+      
+      <div className="text-center mt-16">
+        <a href="#projects" className="btn-primary">Learn More About My Vision</a>
+      </div>
+    </section>
+  );
 }
 
 function TimelineItem({ event, index }: { event: any; index: number }) {
@@ -241,21 +254,27 @@ function TimelineItem({ event, index }: { event: any; index: number }) {
 }
 
 function ProjectsSection({ settings, projects }: { settings: Record<string, string>; projects: any[] }) {
+  const defaultProjects = [
+    { title: "Web3 Leadership Ecosystem", description: "Platform for creating visionary leaders and entrepreneurs.", tags: ["Web3", "Leadership", "Education"], icon: "👑" },
+    { title: "NFT Rental Agreements Platform", description: "Empowering users to leverage technology for financial freedom.", tags: ["NFT", "DeFi", "Platform"], icon: "🎫" },
+    { title: "Tech & Innovation Initiatives", description: "Training, mentorship, and community building for changemakers.", tags: ["Education", "Mentorship", "Community"], icon: "🛠️" },
+  ];
+
+  const displayProjects = projects.length > 0 ? projects : defaultProjects;
+
   return (
     <section id="projects" className="section bg-[#0a0a0a]">
       <div className="text-center mb-16">
-        <h2 className="section-title">{settings.projects_title || "Building the Future, One Innovation at a Time"}</h2>
+        <h2 className="section-title">{settings.projects_title}</h2>
         <p className="text-[#a0a0a0] max-w-2xl mx-auto mt-4">
-          {settings.projects_subtitle || "Web3 isn't just technology—it's an opportunity to create leaders, entrepreneurs, and second chances."}
+          {settings.projects_subtitle}
         </p>
       </div>
       
       <div className="grid md:grid-cols-3 gap-8">
-        {projects.length > 0 ? projects.map((project) => (
-          <ProjectCard key={project.id} project={project} />
-        )) : (
-          <DefaultProjects />
-        )}
+        {displayProjects.map((project: any, i: number) => (
+          <ProjectCard key={i} project={project} />
+        ))}
       </div>
       
       <div className="flex flex-col sm:flex-row gap-4 justify-center mt-12">
@@ -266,18 +285,6 @@ function ProjectsSection({ settings, projects }: { settings: Record<string, stri
   );
 }
 
-function DefaultProjects() {
-  const defaults = [
-    { title: "Web3 Leadership Ecosystem", description: "Platform for creating visionary leaders and entrepreneurs.", tags: ["Web3", "Leadership", "Education"], icon: "👑", link: "#" },
-    { title: "NFT Rental Agreements Platform", description: "Empowering users to leverage technology for financial freedom.", tags: ["NFT", "DeFi", "Platform"], icon: "🎫", link: "#" },
-    { title: "Tech & Innovation Initiatives", description: "Training, mentorship, and community building for changemakers.", tags: ["Education", "Mentorship", "Community"], icon: "🛠️", link: "#" },
-  ];
-
-  return defaults.map((p, i) => (
-    <ProjectCard key={i} project={{ id: i, ...p, order: i }} />
-  ));
-}
-
 function ProjectCard({ project }: { project: any }) {
   return (
     <div className="card glow-effect h-full flex flex-col">
@@ -285,7 +292,7 @@ function ProjectCard({ project }: { project: any }) {
       <h3 className="text-xl font-bold text-white mb-4">{project.title}</h3>
       <p className="text-[#a0a0a0] flex-grow mb-6">{project.description}</p>
       <div className="flex flex-wrap gap-2">
-        {project.tags.map((tag: string, index: number) => (
+        {(project.tags || []).map((tag: string, index: number) => (
           <span key={index} className="px-3 py-1 bg-[#1a1a1a] border border-[#2a2a2a] rounded-full text-xs text-[#a0a0a0]">
             {tag}
           </span>
@@ -296,21 +303,27 @@ function ProjectCard({ project }: { project: any }) {
 }
 
 function BlogSection({ settings, posts }: { settings: Record<string, string>; posts: any[] }) {
+  const defaultPosts = [
+    { title: "Why Second Chances Matter in Web3", excerpt: "The decentralized future belongs to those who were told they didn't belong.", date: "March 2026", readTime: "5 min read" },
+    { title: "From Homeless to Web3: My Blueprint", excerpt: "The exact steps I took to transform my life and build in the digital age.", date: "February 2026", readTime: "8 min read" },
+    { title: "The Death of Traditional Entrepreneurship", excerpt: "Why Web3 is rewriting the rules of building and ownership.", date: "January 2026", readTime: "6 min read" },
+  ];
+
+  const displayPosts = posts.length > 0 ? posts : defaultPosts;
+
   return (
     <section id="blog" className="section bg-[#0a0a0a]">
       <div className="text-center mb-16">
-        <h2 className="section-title">{settings.blog_title || "Thoughts, Lessons, and Innovations"}</h2>
+        <h2 className="section-title">{settings.blog_title}</h2>
         <p className="text-[#a0a0a0] max-w-2xl mx-auto mt-4">
-          {settings.blog_subtitle || "A space for insights on entrepreneurship, Web3, technology, and personal growth."}
+          {settings.blog_subtitle}
         </p>
       </div>
       
       <div className="grid md:grid-cols-3 gap-8">
-        {posts.length > 0 ? posts.map((post) => (
-          <BlogCard key={post.id} post={post} />
-        )) : (
-          <DefaultPosts />
-        )}
+        {displayPosts.map((post: any, i: number) => (
+          <BlogCard key={i} post={post} />
+        ))}
       </div>
       
       <div className="flex flex-col sm:flex-row gap-4 justify-center mt-12">
@@ -319,18 +332,6 @@ function BlogSection({ settings, posts }: { settings: Record<string, string>; po
       </div>
     </section>
   );
-}
-
-function DefaultPosts() {
-  const defaults = [
-    { title: "Why Second Chances Matter in Web3", excerpt: "The decentralized future belongs to those who were told they didn't belong.", date: "March 2026", readTime: "5 min read" },
-    { title: "From Homeless to Web3: My Blueprint", excerpt: "The exact steps I took to transform my life and build in the digital age.", date: "February 2026", readTime: "8 min read" },
-    { title: "The Death of Traditional Entrepreneurship", excerpt: "Why Web3 is rewriting the rules of building and ownership.", date: "January 2026", readTime: "6 min read" },
-  ];
-
-  return defaults.map((p, i) => (
-    <BlogCard key={i} post={{ id: i, ...p, link: "#", order: i }} />
-  ));
 }
 
 function BlogCard({ post }: { post: any }) {
@@ -352,9 +353,9 @@ function ContactSection({ settings }: { settings: Record<string, string> }) {
     <section id="contact" className="section bg-[#0a0a0a]">
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-12">
-          <h2 className="section-title">{settings.contact_title || "Let's Build Something Extraordinary"}</h2>
+          <h2 className="section-title">{settings.contact_title}</h2>
           <p className="text-[#a0a0a0] mt-4">
-            {settings.contact_subtitle || "Whether you want to collaborate, invest, or learn from my journey, I'm ready to connect."}
+            {settings.contact_subtitle}
           </p>
         </div>
         
@@ -420,9 +421,9 @@ function FinalCTASection({ settings }: { settings: Record<string, string> }) {
     <section className="section bg-[#0a0a0a] relative overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(255,61,0,0.2),_transparent_70%)]" />
       <div className="text-center relative z-10">
-        <h2 className="section-title">{settings.cta_title || "The Sky Is Never the Limit"}</h2>
+        <h2 className="section-title">{settings.cta_title}</h2>
         <p className="text-xl text-[#a0a0a0] max-w-2xl mx-auto mt-4 mb-12">
-          {settings.cta_subtitle || "I believe in pushing boundaries, creating opportunities, and empowering the next generation. Join me and reach for the galaxy."}
+          {settings.cta_subtitle}
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <a href="#contact" className="btn-primary animate-pulse-glow">Join the Movement</a>
