@@ -349,11 +349,27 @@ export default function AdminDashboard() {
                   />
                 </div>
                 <div>
+                  <label className="block text-sm text-[#a0a0a0] mb-2">Phone Number</label>
+                  <input
+                    type="tel"
+                    value={settings.phone || ""}
+                    onChange={(e) => handleSettingChange("phone", e.target.value)}
+                  />
+                </div>
+                <div>
                   <label className="block text-sm text-[#a0a0a0] mb-2">Twitter URL</label>
                   <input
                     type="url"
                     value={settings.twitter || ""}
                     onChange={(e) => handleSettingChange("twitter", e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm text-[#a0a0a0] mb-2">Discord URL</label>
+                  <input
+                    type="url"
+                    value={settings.discord || ""}
+                    onChange={(e) => handleSettingChange("discord", e.target.value)}
                   />
                 </div>
                 <div>

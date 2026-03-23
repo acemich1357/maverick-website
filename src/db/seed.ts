@@ -25,10 +25,12 @@ async function seed() {
     { key: "contact_subtitle", value: "Whether you want to collaborate, invest, or learn from my journey, I&apos;m ready to connect." },
     { key: "cta_title", value: "The Sky Is Never the Limit" },
     { key: "cta_subtitle", value: "I believe in pushing boundaries, creating opportunities, and empowering the next generation. Join me and reach for the galaxy." },
-    { key: "email", value: "hello@acemich.com" },
-    { key: "twitter", value: "https://twitter.com/acemich" },
-    { key: "linkedin", value: "https://linkedin.com/in/acemich" },
-    { key: "github", value: "https://github.com/acemich" },
+    { key: "email", value: "acemichel0@gmail.com" },
+    { key: "phone", value: "+254700757159" },
+    { key: "twitter", value: "" },
+    { key: "discord", value: "" },
+    { key: "linkedin", value: "" },
+    { key: "github", value: "" },
   ];
 
   for (const setting of settings) {

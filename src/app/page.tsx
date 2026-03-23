@@ -115,9 +115,10 @@ function HeroSection({ settings, photos }: { settings: Record<string, string>; p
         </div>
         
         <div className="mt-16 flex justify-center gap-6">
-          <SocialIcon href={settings.twitter || "#"} label="Twitter">X</SocialIcon>
-          <SocialIcon href={settings.linkedin || "#"} label="LinkedIn">in</SocialIcon>
-          <SocialIcon href={settings.github || "#"} label="GitHub">GH</SocialIcon>
+          {settings.twitter && <SocialIcon href={settings.twitter} label="Twitter">X</SocialIcon>}
+          {settings.discord && <SocialIcon href={settings.discord} label="Discord">D</SocialIcon>}
+          {settings.linkedin && <SocialIcon href={settings.linkedin} label="LinkedIn">in</SocialIcon>}
+          {settings.github && <SocialIcon href={settings.github} label="GitHub">GH</SocialIcon>}
         </div>
       </div>
     </section>
@@ -375,8 +376,28 @@ function ContactSection({ settings }: { settings: Record<string, string> }) {
           <button type="submit" className="btn-primary w-full">Send Message</button>
         </form>
         
-        <div className="flex justify-center gap-6 mt-12">
+        <div className="mt-12 space-y-4">
+          {settings.email && (
+            <a href={`mailto:${settings.email}`} className="flex items-center justify-center gap-3 text-[#a0a0a0] hover:text-[#ff3d00] transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+              {settings.email}
+            </a>
+          )}
+          {settings.phone && (
+            <a href={`tel:${settings.phone}`} className="flex items-center justify-center gap-3 text-[#a0a0a0] hover:text-[#ff3d00] transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+              </svg>
+              {settings.phone}
+            </a>
+          )}
+        </div>
+        
+        <div className="flex justify-center gap-6 mt-8">
           {settings.twitter && <SocialLink href={settings.twitter} label="Twitter">Twitter</SocialLink>}
+          {settings.discord && <SocialLink href={settings.discord} label="Discord">Discord</SocialLink>}
           {settings.linkedin && <SocialLink href={settings.linkedin} label="LinkedIn">LinkedIn</SocialLink>}
           {settings.github && <SocialLink href={settings.github} label="GitHub">GitHub</SocialLink>}
         </div>
@@ -418,10 +439,31 @@ function Footer({ settings }: { settings: Record<string, string> }) {
       <div className="max-w-6xl mx-auto px-6 text-center">
         <p className="text-2xl font-bold text-gradient mb-4">ACE MICH</p>
         <p className="text-[#a0a0a0] mb-6">Empowering the next generation of leaders and innovators.</p>
+        
+        <div className="flex flex-col items-center gap-3 mb-6">
+          {settings.email && (
+            <a href={`mailto:${settings.email}`} className="text-[#a0a0a0] hover:text-[#ff3d00] transition-colors flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+              {settings.email}
+            </a>
+          )}
+          {settings.phone && (
+            <a href={`tel:${settings.phone}`} className="text-[#a0a0a0] hover:text-[#ff3d00] transition-colors flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+              </svg>
+              {settings.phone}
+            </a>
+          )}
+        </div>
+        
         <div className="flex justify-center gap-6 mb-8">
-          <a href={settings.twitter || "#"} className="text-[#a0a0a0] hover:text-[#ff3d00] transition-colors">Twitter</a>
-          <a href={settings.linkedin || "#"} className="text-[#a0a0a0] hover:text-[#ff3d00] transition-colors">LinkedIn</a>
-          <a href={settings.github || "#"} className="text-[#a0a0a0] hover:text-[#ff3d00] transition-colors">GitHub</a>
+          {settings.twitter && <a href={settings.twitter} className="text-[#a0a0a0] hover:text-[#ff3d00] transition-colors">Twitter</a>}
+          {settings.discord && <a href={settings.discord} className="text-[#a0a0a0] hover:text-[#ff3d00] transition-colors">Discord</a>}
+          {settings.linkedin && <a href={settings.linkedin} className="text-[#a0a0a0] hover:text-[#ff3d00] transition-colors">LinkedIn</a>}
+          {settings.github && <a href={settings.github} className="text-[#a0a0a0] hover:text-[#ff3d00] transition-colors">GitHub</a>}
         </div>
         <p className="text-[#a0a0a0] text-sm">© {new Date().getFullYear()} Ace Mich. All rights reserved.</p>
       </div>
