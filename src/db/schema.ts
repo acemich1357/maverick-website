@@ -62,5 +62,5 @@ export const connectionRequests = sqliteTable("connection_requests", {
   linkedin: text("linkedin"),
   twitter: text("twitter"),
   status: text("status").notNull().default("pending"),
-  createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
+  createdAt: integer("created_at"),
 });

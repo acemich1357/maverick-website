@@ -23,7 +23,8 @@ export async function POST(request: Request) {
       message: message || "",
       linkedin: linkedin || "",
       twitter: twitter || "",
-      status: "pending",
+      status: "pending" as const,
+      createdAt: Math.floor(Date.now() / 1000),
     });
 
     return NextResponse.redirect(new URL("/", request.url) + "?success=true");
