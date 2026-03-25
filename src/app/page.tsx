@@ -442,9 +442,9 @@ function TimelineItem({ event, index }: { event: any; index: number }) {
 
 function ProjectsSection({ settings, projects }: { settings: Record<string, string>; projects: any[] }) {
   const defaultProjects = [
-    { title: "Web3 Leadership Ecosystem", description: "Platform for creating visionary leaders and entrepreneurs.", tags: ["Web3", "Leadership", "Education"], icon: "👑" },
-    { title: "NFT Rental Agreements Platform", description: "Empowering users to leverage technology for financial freedom.", tags: ["NFT", "DeFi", "Platform"], icon: "🎫" },
-    { title: "Tech & Innovation Initiatives", description: "Training, mentorship, and community building for changemakers.", tags: ["Education", "Mentorship", "Community"], icon: "🛠️" },
+    { title: "A Moran: The Great I AM", description: "Web3 leadership ecosystem creating visionary leaders and entrepreneurs through decentralized education and community building.", tags: ["Web3", "Leadership", "Education"], icon: "👑" },
+    { title: "UNBNKD", description: "Offline banking protocol bringing decentralized finance to underserved communities without internet connectivity.", tags: ["DeFi", "Banking", "Offline"], icon: "🏦" },
+    { title: "Empatix", description: "Mental health services platform connecting people with professionals through an innovative app and comprehensive care ecosystem.", tags: ["Health", "App", "Platform"], icon: "🧠" },
   ];
 
   const displayProjects = projects.length > 0 ? projects : defaultProjects;
