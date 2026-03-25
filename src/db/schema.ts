@@ -53,3 +53,14 @@ export const timelineEvents = sqliteTable("timeline_events", {
   order: integer("order").notNull().default(0),
   updatedAt: integer("updated_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
 });
+
+export const connectionRequests = sqliteTable("connection_requests", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  name: text("name").notNull(),
+  email: text("email").notNull(),
+  message: text("message"),
+  linkedin: text("linkedin"),
+  twitter: text("twitter"),
+  status: text("status").notNull().default("pending"),
+  createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
+});

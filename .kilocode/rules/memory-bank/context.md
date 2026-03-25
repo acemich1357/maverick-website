@@ -14,7 +14,7 @@ A bold, personal website for Ace Mich - visionary entrepreneur and Web3 innovato
 - [x] Timeline/Journey section with 6 key life events
 - [x] Projects section with 3 Web3 projects
 - [x] Blog/Insights section with 3 sample posts
-- [x] Contact section with form
+- [x] Contact section with form and meeting link
 - [x] Final CTA section
 - [x] Custom styling with dark theme, orange accent colors
 - [x] Smooth scroll navigation
@@ -24,10 +24,13 @@ A bold, personal website for Ace Mich - visionary entrepreneur and Web3 innovato
 - [x] Photo upload functionality (up to 3 photos)
 - [x] Settings management for all sections
 - [x] Database integration with Drizzle ORM
+- [x] Connection requests feature with meeting link (calendly)
+- [x] Admin can view people trying to connect
+- [x] Added "Admin" button in navbar
 
 ## Database Schema
 
-Tables: `admin`, `site_settings`, `photos`, `projects`, `blog_posts`, `timeline_events`
+Tables: `admin`, `site_settings`, `photos`, `projects`, `blog_posts`, `timeline_events`, `connection_requests`
 
 ## Current Structure
 
@@ -62,6 +65,7 @@ Tables: `admin`, `site_settings`, `photos`, `projects`, `blog_posts`, `timeline_
 |------|---------|
 | March 2026 | Created Ace Mich personal website with all 7 sections |
 | March 2026 | Added admin panel with login, settings, and photo upload |
+| March 2026 | Added connection requests feature with meeting link and admin view |
 
 ## Pending Improvements
 

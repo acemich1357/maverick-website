@@ -15,11 +15,23 @@ interface Photo {
   alt: string;
 }
 
+interface ConnectionRequest {
+  id: number;
+  name: string;
+  email: string;
+  message: string;
+  linkedin: string;
+  twitter: string;
+  status: string;
+  createdAt: string;
+}
+
 export default function AdminDashboard() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState("settings");
   const [settings, setSettings] = useState<SiteSettings>({});
   const [photos, setPhotos] = useState<Photo[]>([]);
+  const [connections, setConnections] = useState<ConnectionRequest[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
@@ -30,16 +42,19 @@ export default function AdminDashboard() {
 
   const fetchData = async () => {
     try {
-      const [settingsRes, photosRes] = await Promise.all([
+      const [settingsRes, photosRes, connectionsRes] = await Promise.all([
         fetch("/api/admin/settings"),
         fetch("/api/admin/photos"),
+        fetch("/api/connections"),
       ]);
       
       const settingsData = await settingsRes.json();
       const photosData = await photosRes.json();
+      const connectionsData = await connectionsRes.json();
       
       setSettings(settingsData.settings || {});
       setPhotos(photosData.photos || []);
+      setConnections(connectionsData || []);
     } catch (error) {
       console.error("Failed to fetch data:", error);
     } finally {
@@ -156,7 +171,7 @@ export default function AdminDashboard() {
 
       <div className="max-w-6xl mx-auto px-6 py-8">
         <nav className="flex gap-4 mb-8 border-b border-[#2a2a2a] pb-4">
-          {["settings", "photos"].map((tab) => (
+          {["settings", "photos", "connections"].map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
@@ -167,6 +182,11 @@ export default function AdminDashboard() {
               }`}
             >
               {tab.charAt(0).toUpperCase() + tab.slice(1)}
+              {tab === "connections" && connections.length > 0 && (
+                <span className="ml-2 px-2 py-0.5 bg-[#ff3d00] rounded-full text-xs">
+                  {connections.length}
+                </span>
+              )}
             </button>
           ))}
         </nav>
@@ -459,6 +479,66 @@ export default function AdminDashboard() {
                   );
                 })}
               </div>
+            </section>
+          </div>
+        )}
+
+        {activeTab === "connections" && (
+          <div className="space-y-8">
+            <section className="card">
+              <h2 className="text-xl font-bold mb-6">Connection Requests</h2>
+              <p className="text-[#a0a0a0] mb-6">
+                People who want to connect with you through the contact form.
+              </p>
+              
+              {connections.length === 0 ? (
+                <p className="text-[#666]">No connection requests yet.</p>
+              ) : (
+                <div className="space-y-4">
+                  {connections.map((conn) => (
+                    <div key={conn.id} className="border border-[#2a2a2a] rounded-lg p-6">
+                      <div className="flex justify-between items-start mb-4">
+                        <div>
+                          <h3 className="text-lg font-bold text-white">{conn.name}</h3>
+                          <a href={`mailto:${conn.email}`} className="text-[#ff3d00] hover:underline">
+                            {conn.email}
+                          </a>
+                        </div>
+                        <span className={`px-3 py-1 rounded-full text-xs ${
+                          conn.status === "pending" 
+                            ? "bg-yellow-500/20 text-yellow-400"
+                            : conn.status === "contacted"
+                            ? "bg-green-500/20 text-green-400"
+                            : "bg-gray-500/20 text-gray-400"
+                        }`}>
+                          {conn.status}
+                        </span>
+                      </div>
+                      
+                      {conn.message && (
+                        <p className="text-[#a0a0a0] mb-4">{conn.message}</p>
+                      )}
+                      
+                      <div className="flex gap-4 text-sm text-[#666] mb-4">
+                        {conn.linkedin && (
+                          <a href={conn.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-[#ff3d00]">
+                            LinkedIn
+                          </a>
+                        )}
+                        {conn.twitter && (
+                          <a href={`https://twitter.com/${conn.twitter.replace("@", "")}`} target="_blank" rel="noopener noreferrer" className="hover:text-[#ff3d00]">
+                            Twitter
+                          </a>
+                        )}
+                      </div>
+                      
+                      <div className="text-xs text-[#666]">
+                        {new Date(conn.createdAt).toLocaleString()}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </section>
           </div>
         )}

@@ -86,12 +86,15 @@ function NavBar({ settings }: { settings: Record<string, string> }) {
         <Link href="/" className="text-2xl font-bold text-gradient">
           ACE MICH
         </Link>
-        <div className="hidden md:flex gap-8">
+        <div className="hidden md:flex gap-8 items-center">
           <NavLink href="#about">About</NavLink>
           <NavLink href="#journey">Journey</NavLink>
           <NavLink href="#projects">Projects</NavLink>
           <NavLink href="#blog">Insights</NavLink>
           <NavLink href="#contact">Connect</NavLink>
+          <Link href="/admin/login" className="text-sm text-[#666] hover:text-[#ff3d00] transition-colors">
+            Admin
+          </Link>
         </div>
       </div>
     </nav>
@@ -359,20 +362,53 @@ function ContactSection({ settings }: { settings: Record<string, string> }) {
           </p>
         </div>
         
-        <form className="space-y-6">
+        <div className="mb-8">
+          <a 
+            href="https://cal.id/acemichel0-gmail" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="btn-primary w-full flex items-center justify-center gap-2"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            Schedule a Meeting
+          </a>
+        </div>
+        
+        <div className="relative mb-8">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-[#2a2a2a]"></div>
+          </div>
+          <div className="relative flex justify-center text-sm">
+            <span className="px-4 bg-[#0a0a0a] text-[#666]">Or send a message</span>
+          </div>
+        </div>
+        
+        <form className="space-y-6" action="/api/connections" method="POST">
           <div className="grid md:grid-cols-2 gap-6">
             <div>
               <label htmlFor="name" className="block text-sm text-[#a0a0a0] mb-2">Name</label>
-              <input type="text" id="name" placeholder="Your name" />
+              <input type="text" id="name" name="name" placeholder="Your name" required />
             </div>
             <div>
               <label htmlFor="email" className="block text-sm text-[#a0a0a0] mb-2">Email</label>
-              <input type="email" id="email" placeholder="your@email.com" />
+              <input type="email" id="email" name="email" placeholder="your@email.com" required />
+            </div>
+          </div>
+          <div className="grid md:grid-cols-2 gap-6">
+            <div>
+              <label htmlFor="linkedin" className="block text-sm text-[#a0a0a0] mb-2">LinkedIn (optional)</label>
+              <input type="url" id="linkedin" name="linkedin" placeholder="https://linkedin.com/in/..." />
+            </div>
+            <div>
+              <label htmlFor="twitter" className="block text-sm text-[#a0a0a0] mb-2">Twitter (optional)</label>
+              <input type="text" id="twitter" name="twitter" placeholder="@username" />
             </div>
           </div>
           <div>
             <label htmlFor="message" className="block text-sm text-[#a0a0a0] mb-2">Message</label>
-            <textarea id="message" rows={5} placeholder="Tell me about your project or inquiry..." />
+            <textarea id="message" name="message" rows={5} placeholder="Tell me about your project or inquiry..." />
           </div>
           <button type="submit" className="btn-primary w-full">Send Message</button>
         </form>
