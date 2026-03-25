@@ -70,6 +70,7 @@ export default async function Home() {
       <HeroSection settings={settings} photos={photos} />
       <AboutSection settings={settings} />
       <JourneySection settings={settings} events={events} />
+      <ResumeSection />
       <ProjectsSection settings={settings} projects={projects} />
       <BlogSection settings={settings} posts={posts} />
       <ContactSection settings={settings} />
@@ -89,6 +90,7 @@ function NavBar({ settings }: { settings: Record<string, string> }) {
         <div className="hidden md:flex gap-8 items-center">
           <NavLink href="#about">About</NavLink>
           <NavLink href="#journey">Journey</NavLink>
+          <NavLink href="#resume">Resume</NavLink>
           <NavLink href="#projects">Projects</NavLink>
           <NavLink href="#blog">Insights</NavLink>
           <NavLink href="#contact">Connect</NavLink>
@@ -231,6 +233,188 @@ function JourneySection({ settings, events }: { settings: Record<string, string>
       
       <div className="text-center mt-16">
         <a href="#projects" className="btn-primary">Learn More About My Vision</a>
+      </div>
+    </section>
+  );
+}
+
+function ResumeSection() {
+  const jobs = [
+    {
+      company: "TGIAM",
+      location: "Nairobi, Kenya",
+      title: "Founder and CEO",
+      period: "01/2018 - Present",
+      highlights: [
+        "Freelance web developer, marketing expert, business development expert, content creator and community developer at Superteam earn, Circle USDC, Monad network, Somnia network, Hackernoon, Bitbadges, Polygon network, Worldcoin network, BNB network, chaingpt, Chainlink and Solana network.",
+        "Freelance content creator and mentor, SolMinds podcast and partner in psychology and spiritual communities (Asktheexpert, Psychology Today).",
+        "Volunteer fundraising and business development executive at PLANE Uganda and Gangways initiative Germany.",
+        "Consulting developer at Agi.ai and Catoffgaming.xyz.",
+        "Co-Founder Cheza World International and business development partner at Cheza World Kenya, Wotekwa Wote Kenya.",
+        "Founder and developer Degen Disruptive HCD: A next generation Human centered Design course.",
+      ],
+    },
+    {
+      company: "Dreadmor Games",
+      location: "New York, USA",
+      title: "Community Manager",
+      period: "05/2025 - 12/2025",
+      highlights: [
+        "Moderated and supported online community channels to foster positive engagement and growth.",
+        "Assisted players with questions, feedback, and onboarding to enhance community experience.",
+        "Maintained active discussions and ensured adherence to community guidelines.",
+        "Highlighted game updates and events to keep players informed and involved.",
+      ],
+    },
+    {
+      company: "Superteam Earn",
+      location: "Mumbai, India",
+      title: "Freelance Researcher",
+      period: "02/2023 - 02/2025",
+      highlights: [
+        "Moderated and supported Web3 community channels, ensuring positive engagement.",
+        "Assisted new contributors by answering questions and clarifying bounty requirements.",
+        "Created original Web3 content including educational posts and ecosystem updates.",
+        "Amplified hackathons, bounties, and project launches through crypto-native communication.",
+      ],
+    },
+    {
+      company: "Catoff Games",
+      location: "Mumbai, India",
+      title: "Business Development Manager",
+      period: "05/2024 - 11/2024",
+      highlights: [
+        "Web3 gaming platform enabling peer-to-peer challenges and wagers with smart-contract-based payouts.",
+        "Identified and developed strategic partnerships to drive platform growth and adoption.",
+        "Led outreach to ecosystem partners, creators, and communities within Web3 and gaming.",
+        "Supported go-to-market strategy and expansion initiatives.",
+      ],
+    },
+    {
+      company: "Afex",
+      location: "Ibadan, Nigeria",
+      title: "Software Engineer",
+      period: "01/2022 - 11/2022",
+      highlights: [
+        "Streamlined CI/CD pipelines for faster and more reliable code deployments.",
+        "Analyzed system requirements to make informed technology stack decisions.",
+        "Ensured code quality and maintainability by enforcing SOLID principles.",
+      ],
+    },
+    {
+      company: "Nanjing Manyuan Tech",
+      location: "Nanjing, China",
+      title: "Software Engineer",
+      period: "01/2021 - 12/2021",
+      highlights: [
+        "Modified and extended existing software to fix defects and add new features.",
+        "Assisted with integration of cross-functional technology and business solutions.",
+        "Provided guidance related to upgrade cycle, end of life support and operational risks.",
+      ],
+    },
+    {
+      company: "John Snow Inc",
+      location: "Washington, DC",
+      title: "Software Test Engineer",
+      period: "01/2020 - 05/2021",
+      highlights: [
+        "Provided strategic planning and vision to promote quality assurance technical initiatives.",
+        "Troubleshot issues and bugs discovered in testing to determine root cause.",
+        "Worked with developers to determine testing coverage needs and provide feedback.",
+      ],
+    },
+    {
+      company: "Illustrate Digital",
+      location: "Manchester, UK",
+      title: "Marketing Coordinator",
+      period: "01/2017 - 05/2020",
+      highlights: [
+        "Developed and maintained relationships with external vendors.",
+        "Monitored and analyzed social media metrics to guide strategy adjustments.",
+        "Evaluated effectiveness of marketing initiatives, providing actionable insights.",
+      ],
+    },
+    {
+      company: "Medecins Du Monde",
+      location: "Paris, France",
+      title: "Psychologist, Private Practice",
+      period: "11/2014 - 05/2017",
+      highlights: [
+        "Conducted research on human behavior.",
+        "Assisted in training.",
+        "Worked with individuals after trauma and in gender-based recovery.",
+      ],
+    },
+  ];
+
+  const skills = [
+    "Business Development",
+    "Customer Service",
+    "Communication Skills",
+    "Computer Literacy",
+    "Time Management",
+    "Strategic Thinking",
+    "Business Planning",
+    "Strategy Implementation",
+    "Revenue Development",
+    "Financial Management",
+    "Goal Setting",
+    "Visionary Leadership",
+    "Volunteer Recruitment",
+    "Fundraising Expertise",
+    "Social Media Management",
+    "Event Organizing",
+    "Cross Cultural Sensitivity",
+  ];
+
+  return (
+    <section id="resume" className="section bg-[#0a0a0a]">
+      <div className="text-center mb-16">
+        <h2 className="section-title">Professional Experience</h2>
+        <p className="text-[#a0a0a0] max-w-2xl mx-auto mt-4">
+          A proven track record of building, leading, and scaling across multiple industries and continents.
+        </p>
+      </div>
+
+      <div className="space-y-8 max-w-4xl mx-auto">
+        {jobs.map((job, index) => (
+          <div key={index} className="card">
+            <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-4">
+              <div>
+                <h3 className="text-xl font-bold text-white">{job.title}</h3>
+                <p className="text-[#ff3d00] font-medium">{job.company}</p>
+                <p className="text-[#666] text-sm">{job.location}</p>
+              </div>
+              <span className="font-mono text-[#666] text-sm mt-2 md:mt-0">{job.period}</span>
+            </div>
+            <ul className="space-y-2">
+              {job.highlights.map((highlight, hIndex) => (
+                <li key={hIndex} className="text-[#a0a0a0] text-sm leading-relaxed flex gap-2">
+                  <span className="text-[#ff3d00]">•</span>
+                  {highlight}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-16 max-w-4xl mx-auto">
+        <h3 className="text-2xl font-bold text-white mb-8 text-center">Skills</h3>
+        <div className="flex flex-wrap justify-center gap-3">
+          {skills.map((skill, index) => (
+            <span
+              key={index}
+              className="px-4 py-2 bg-[#1a1a1a] border border-[#2a2a2a] rounded-full text-[#a0a0a0] text-sm"
+            >
+              {skill}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <div className="text-center mt-16">
+        <a href="#projects" className="btn-primary">View My Projects</a>
       </div>
     </section>
   );
