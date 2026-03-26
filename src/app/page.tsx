@@ -4,7 +4,7 @@ import { siteSettings, photos, projects, blogPosts, timelineEvents } from "@/db/
 const defaultSettings = {
   hero_subtitle: "Visionary Entrepreneur • Web3 Innovator • Builder",
   hero_headline: "Not Your Ordinary Entrepreneur.\nDreamer. Revolutionary. Builder.",
-  hero_intro: "Empowering the next generation of leaders and innovators through Web3. I am Ace Mich—someone who has walked the toughest paths, learned from the school of life, and emerged stronger, wiser, and ready to build the future.",
+  hero_intro: "Empowering the next generation of leaders and innovators through Web3. I am Ace Michel K.N Mwashuma—someone who has walked the toughest paths, learned from the school of life, and emerged stronger, wiser, and ready to build the future.",
   about_title: "The Journey That Made Me Who I Am",
   journey_title: "From Trials to Triumph",
   journey_subtitle: "Life is not a straight line. Mine has been filled with highs, lows, lessons, and breakthroughs. Here's a look at the moments that defined me:",
@@ -85,7 +85,7 @@ function NavBar({ settings }: { settings: Record<string, string> }) {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0a0a0a]/90 backdrop-blur-md border-b border-[#2a2a2a]">
       <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
         <Link href="/" className="text-2xl font-bold text-gradient">
-          ACE MICH
+          Ace Michel K.N Mwashuma
         </Link>
         <div className="hidden md:flex gap-8 items-center">
           <NavLink href="#about">About</NavLink>
@@ -686,7 +686,7 @@ function Footer({ settings }: { settings: Record<string, string> }) {
           {settings.linkedin && <a href={settings.linkedin} className="text-[#a0a0a0] hover:text-[#ff3d00] transition-colors">LinkedIn</a>}
           {settings.github && <a href={settings.github} className="text-[#a0a0a0] hover:text-[#ff3d00] transition-colors">GitHub</a>}
         </div>
-        <p className="text-[#a0a0a0] text-sm">© {new Date().getFullYear()} Ace Mich. All rights reserved.</p>
+        <p className="text-[#a0a0a0] text-sm">© {new Date().getFullYear()} Ace Michel K.N Mwashuma. All rights reserved.</p>
       </div>
     </footer>
   );
