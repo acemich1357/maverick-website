@@ -13,7 +13,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Ace Mich | Visionary Entrepreneur & Web3 Innovator",
+  title: "Maverick:Degen Disruptor | Ace Michel K.N. Mwashuma",
   description: "Empowering the next generation of leaders and innovators through Web3. Join the movement.",
 };
 
